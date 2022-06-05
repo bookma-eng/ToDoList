@@ -13,28 +13,32 @@ unset($_SESSION['error_msgs']);
     <head>
         <meta charset="UTF-8">
         <meta name = "viewport"
-              content = "width=device-width, user-scalable=no, inirial-scale=1.0, maximum-scale=1.0">
+              content = "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>TODOリスト</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="./../../public/css/main.css">
     </head>
     <body>
-        <h1>TODO リスト</h1>
+        <h1>Todo list</h1>
         <div><a href="./new.php">新規作成</a></div>
+        
         <?php if($todo_list):?>
             <ul class="list-group">
-                <?php foreach($todo_list as $todo):?>
-                    <li class="list-group-item">
-                        <label class="checkbox-label">
-                            <input type="checkbox" class="todo-checkbox" data-id="<?php echo $todo['id'];?>"<?php if($todo['status']):?>checked<?php endif;?>>
-                        </label>
-                        <a href="./detail.php?todo_id=<?php echo $todo['id']?>"><?php echo $todo['title'];?></a>:<span class ="status"><?php echo $todo['display_status'];?></span>
-                        <div class="delete-btn"data-id="<?php echo $todo['id'];?>">
-                            <button >削除</button>
-                        </div>
-                    </li>
-                <?php endforeach;?>
+                <h2>Task</h2>
+                    <?php foreach($todo_list as $todo):?>
+                        <li class="list-group-item">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="todo-checkbox" data-id="<?php echo $todo['id'];?>"<?php if($todo['status']):?>checked<?php endif;?>>
+                            </label>
+                            <a href="./detail.php?todo_id=<?php echo $todo['id']?>"><?php echo $todo['title'];?></a>: <span class="status"><?php echo $todo['display_status']; ?></span>
+                            <div class="delete-btn"data-id="<?php echo $todo['id'];?>">
+                                <button >削除</button>
+                            </div>
+                        </li>
+                    <?php endforeach;?>
+                <h2>Completed Task</h2>
+                    
             </ul>
         <?php else: ?>
             <p>データなし</p>
@@ -49,6 +53,26 @@ unset($_SESSION['error_msgs']);
                 </ul>
             </div>
         <?php endif;?>
+        
+        <h2>Search</h2>
+        <form>
+            <div>
+                <label>Keywords</label>
+                <input name="keywords">
+            </div>
+            <div>
+                <label>カテゴリ選択</label>
+                <select>
+                    <option value="0">仕事</option>
+                    <option value="1">勉強</option>
+                    <option value="2">家事</option>
+                    <option value="3">趣味</option>
+                    <option value="4">その他</option>
+                </select>
+            </div>
+            <button>検索</button>
+        </form>
+
         <script src="./../../public/js/jquery-3.6.0.min.js"></script>
         <script>
             $(".delete-btn").click(function(){
