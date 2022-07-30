@@ -43,39 +43,41 @@ class Todo {
         $this->status = $status;
     }
 
-    public static function findByQuery($query){
+
+    public static function findTask(){
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
-        $stmh = $pdo->query($query);
+        $stmh = $pdo->query('select * from todos where status = 0;');
         if($stmh){
-            $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
+            $todo_Tasklist = $stmh->fetchAll(PDO::FETCH_ASSOC);
         }else{
-            $todo_list = array();
+            $todo_Tasklist = array();
         }
-        if($todo_list && count($todo_list) > 0){
-            foreach($todo_list as $index=> $todo){
-                $todo_list[$index]['display_status'] = self::getDisplayStatus($todo['status']);
+        //各タスクにステータスを持たせる
+        if($todo_Tasklist && count($todo_Tasklist) > 0){
+            foreach($todo_Tasklist as $index=> $todo){
+                $todo_Tasklist[$index]['display_status'] = self::getDisplayStatus($todo['status']);
             }
         }
 
-        return $todo_list;
-    
+        return $todo_Tasklist;    
     }
 
-    public static function findAll(){
+    public static function findCompleteTask(){
         $pdo = new PDO(DSN, USERNAME, PASSWORD);
-            $stmh = $pdo->query('select * from todos;');
-            if($stmh){
-                $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
-            }else{
-                $todo_list = array();
+        $stmh = $pdo->query('select * from todos where status = 1;');
+        if($stmh){
+            $todo_Completelist = $stmh->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            $todo_Completelist = array();
+        }
+        //各タスクにステータスを持たせる
+        if($todo_Completelist && count($todo_Completelist) > 0){
+            foreach($todo_Completelist as $index=> $todo){
+                $todo_Completelist[$index]['display_status'] = self::getDisplayStatus($todo['status']);
             }
-            if($todo_list && count($todo_list) > 0){
-                foreach($todo_list as $index=> $todo){
-                    $todo_list[$index]['display_status'] = self::getDisplayStatus($todo['status']);
-                }
-            }
-    
-            return $todo_list;    
+        }
+
+        return $todo_Completelist;    
     }
 
     public static function findById($todo_id){
@@ -86,6 +88,7 @@ class Todo {
             }else{
                 $todo = array();
             }
+            //各タスクにステータスを持たせる
             if($todo){
                 $todo['display_status'] = self::getDisplayStatus($todo['status']);
             }
@@ -93,6 +96,7 @@ class Todo {
             return $todo;    
     }
 
+    //タスク処理ステータス
     public static function getDisplayStatus($status){
         if($status == self::STATUS_INCOMPLETE){
             return self::STATUS_INCOMPLETE_TXT;

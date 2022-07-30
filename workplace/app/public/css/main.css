@@ -6,6 +6,15 @@ ul {
     margin: 0 auto;
 }
 
+main{
+    margin-top: 50px;
+}
+
+h2{
+    color: #0066ff;
+    font-weight: bold;
+}
+
 .list-group {
     max-width: 400px;
 }
@@ -14,16 +23,36 @@ ul {
     display: flex
 }
 
-.checkbox-label {
-    position: relative;
-    top: 5px;
-    margin-right: 5px;
+.complete-btn{
+    margin-left: auto;
 }
 
 .delete-btn {
-    margin-left: auto;
+    margin-left: 5px;
 }
 
 .restore-btn {
     margin-left: auto;
+}
+
+.input-group{
+    max-width: 300px;
+}
+
+.form-select{
+    max-width: 300px;  
+}
+
+.info-item{
+    margin-left: 5px;
+}
+
+.modal-body{
+    text-align: start;
+    font-weight: bold;
+}
+
+.new-text{
+    color: #0066ff;
+    font-weight: bold;    
 }

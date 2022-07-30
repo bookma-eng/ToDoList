@@ -14,6 +14,7 @@ class TodoValidation{
         return $this->error_msgs;
     }
 
+    //新規更新時のバリデーションチェック
     public function check(){
         if(isset($this->data['title']) && empty($this->data['title'])){
             $this->error_msgs[] = "タイトルが空です。"; 
